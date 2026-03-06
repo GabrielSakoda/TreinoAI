@@ -8,6 +8,8 @@
     "dev": "tsx --watch src/index.ts"
   },
   "dependencies": {
+    "@fastify/swagger": "^9.7.0",
+    "@fastify/swagger-ui": "^5.2.5",
     "@types/node": "^24.11.0",
     "dotenv": "^17.3.1",
     "fastify": "^5.7.4",
