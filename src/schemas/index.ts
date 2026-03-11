@@ -163,3 +163,14 @@ export const GetWorkoutPlansResponseSchema = z.array(
     ),
   }),
 );
+
+export const GetUserTrainDataResponseSchema = z
+  .object({
+    userId: z.uuid(),
+    userName: z.string(),
+    weightInGrams: z.number(),
+    heightInCentimeters: z.number(),
+    age: z.number(),
+    bodyFatPercentage: z.number().min(0).max(100),
+  })
+  .nullable();
