@@ -118,7 +118,13 @@ export class GetHomeData {
     }
 
     // Calculate workout streak
-    const workoutStreak = await this.calculateStreak(dto.userId, currentDate);
+    let workoutStreak = 0;
+    if (activeWorkoutPlan) {
+      workoutStreak = await this.calculateStreak(
+        activeWorkoutPlan.id,
+        currentDate
+      );
+    }
 
     return {
       activeWorkoutPlanId: activeWorkoutPlan.id,
