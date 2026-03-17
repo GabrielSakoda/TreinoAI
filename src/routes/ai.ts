@@ -1,4 +1,4 @@
-import { openai } from "@ai-sdk/openai";
+import { google } from "@ai-sdk/google";
 import {
   convertToModelMessages,
   stepCountIs,
@@ -87,7 +87,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
       }
       const { messages } = request.body as { messages: UIMessage[] };
       const result = streamText({
-        model: openai("gpt-4o-mini"),
+        model: google("gemini-2.5-flash"),
         system: SYSTEM_PROMPT,
         tools: {
           getUserTrainData: tool({
@@ -103,21 +103,29 @@ export const aiRoutes = async (app: FastifyInstance) => {
             description:
               "Atualiza os dados de treino do usuário (peso, altura, idade, % gordura). O peso deve ser informado em gramas.",
             inputSchema: z.object({
+              name: z
+                .string()
+                .optional()
+                .describe("Nome do usuário"),
               weightInGrams: z
                 .number()
+                .int()
                 .describe("Peso do usuário em gramas (ex: 70kg = 70000)"),
               heightInCentimeters: z
                 .number()
+                .int()
                 .describe("Altura do usuário em centímetros"),
-              age: z.number().describe("Idade do usuário em anos"),
+              age: z.number().int().describe("Idade do usuário em anos"),
               bodyFatPercentage: z
                 .number()
+                .int()
                 .describe("Percentual de gordura corporal"),
             }),
             execute: async (input) => {
               const useCase = new UpsertUserTrainData();
               return useCase.execute({
                 userId: session.user.id,
+                name: input.name,
                 weightInGrams: input.weightInGrams,
                 heightInCentimeters: input.heightInCentimeters,
                 age: input.age,

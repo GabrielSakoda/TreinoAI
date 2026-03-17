@@ -166,7 +166,7 @@ export const GetWorkoutPlansResponseSchema = z.array(
 
 export const GetUserTrainDataResponseSchema = z
   .object({
-    userId: z.uuid(),
+    userId: z.string(),
     userName: z.string(),
     weightInGrams: z.number(),
     heightInCentimeters: z.number(),

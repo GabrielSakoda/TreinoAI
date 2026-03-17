@@ -2,6 +2,7 @@ import { prisma } from "../lib/db.js";
 
 interface InputDto {
   userId: string;
+  name?: string;
   weightInGrams: number;
   heightInCentimeters: number;
   age: number;
@@ -21,6 +22,7 @@ export class UpsertUserTrainData {
     const updatedUser = await prisma.user.update({
       where: { id: dto.userId },
       data: {
+        ...(dto.name !== undefined && { name: dto.name }),
         weightInGrams: dto.weightInGrams,
         heightInCentimeters: dto.heightInCentimeters,
         age: dto.age,
