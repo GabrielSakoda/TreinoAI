@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx --watch src/index.ts",
-    "build": "tsc"
+    "build": "pnpm exec prisma generate && tsc"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.43",
